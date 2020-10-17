@@ -5,7 +5,10 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public float horizontalSpeed;
+    public float verticalSpeed;
     public float horizontalBoundary;
+
+    public EnemyManager enemyManager;
 
     private float direction;
 
@@ -13,6 +16,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         direction = 1; 
+        enemyManager = FindObjectOfType<EnemyManager>();
     }
 
     // Update is called once per frame
@@ -24,7 +28,13 @@ public class EnemyController : MonoBehaviour
 
     private void _Move()
     {
-        transform.Translate(new Vector3(horizontalSpeed * direction * Time.deltaTime, 0, 0));
+        transform.Translate(new Vector3(horizontalSpeed * direction * Time.deltaTime, -verticalSpeed * Time.deltaTime, 0));
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        //Debug.Log(other.gameObject.name);
+        enemyManager.ReturnEnemy(gameObject);
     }
 
     private void _CheckBounds()

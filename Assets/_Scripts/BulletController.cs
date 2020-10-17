@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class BulletController : MonoBehaviour, IApplyDamage
 {
     public float verticalSpeed;
     public float verticalBoundary;
     public BulletManager bulletManager;
+    public int damage;
     
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,12 @@ public class BulletController : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log("Collision Occured on Bullet with: "+other.gameObject.name);
+        //Debug.Log(other.gameObject.name);
         bulletManager.ReturnBullet(gameObject);
+    }
+
+    public int ApplyDamage()
+    {
+        return damage;
     }
 }
